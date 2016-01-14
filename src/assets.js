@@ -154,7 +154,7 @@ export class Assets {
    * @private
    */
   _autoExtname(filePath, extname) {
-    if (path.extname(filePath) === extname) {
+    if (path.extname(filePath) !== extname) {
       return filePath + extname;
     } else {
       return filePath;
