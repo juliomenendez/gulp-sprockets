@@ -8,7 +8,9 @@
     "url": "https://github.com/waka/gulp-sprockets.git"
   },
   "main": "./lib/sprockets.js",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "directories": {
     "test": "test"
   },
@@ -40,11 +42,12 @@
   "dependencies": {
     "babel-polyfill": "^6.2.0",
     "coffee-script": "^1.10.0",
-    "event-stream": "^3.3.1",
     "escodegen": "^1.7.0",
     "esprima": "^2.7.0",
+    "event-stream": "^3.3.1",
     "fs-extra": "^0.24.0",
-    "lodash": "^3.10.1",
+    "klaw-sync": "^1.1.2",
+    "lodash": "^4.0.0",
     "node-sass": "^3.3.3",
     "object-assign": "^4.0.1",
     "postcss": "^5.0.10",

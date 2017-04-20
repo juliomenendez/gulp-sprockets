@@ -87,7 +87,7 @@ export default class Base extends Transformer {
       });
     });
 
-    return _.unique(requires.filter(function(req) {
+    return _.uniq(requires.filter(function(req) {
       return 0 > stubs.indexOf(req);
     }));
   }

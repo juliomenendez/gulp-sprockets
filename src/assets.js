@@ -2,10 +2,11 @@
  * @fileoverview Assets configurations.
  */
 
-import _      from "lodash";
-import assign from 'object-assign';
-import fs     from 'fs';
-import path   from 'path';
+import _        from "lodash";
+import assign   from 'object-assign';
+import fs       from 'fs';
+import path     from 'path';
+import klawSync from 'klaw-sync';
 
 function defaultAssetPaths() {
   return {
@@ -14,6 +15,16 @@ function defaultAssetPaths() {
     stylesheets: [],
     images: []
   };
+}
+
+function getSubdirs(rootPath) {
+  try {
+    return klawSync(rootPath, {nofile: true}).map(function(p) {
+      return path.resolve(p.path);
+    });
+  } catch(e) {
+    return [];
+  }
 }
 
 export class Assets {
@@ -38,6 +49,13 @@ export class Assets {
         return path.resolve(p);
       })
     ]);
+
+
+    var deepJavascriptPaths = [];
+    _.forEach(this._javascriptPaths, function(p) {
+      deepJavascriptPaths = _.concat(deepJavascriptPaths, getSubdirs(p));
+    });
+    this._javascriptPaths = _.concat(this._javascriptPaths, deepJavascriptPaths);
 
     this._stylesheetPaths = _.flatten([
       path.join(this._assetPath, 'stylesheets'),
@@ -132,7 +150,7 @@ export class Assets {
     let res = null;
 
     if (assetPaths && assetPaths.length) {
-      res = _.unique(_.flatten(assetPaths.map((p) => {
+      res = _.uniq(_.flatten(assetPaths.map((p) => {
         return extnames.map((extname) => {
           return this._autoExtname(path.join(p, filePath), extname);
         });
